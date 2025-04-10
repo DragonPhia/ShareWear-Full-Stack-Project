@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<!--
+  Name: Dragon Phiansin
+  Date: 02.27.2025
+  CSC 372-01
+
+  This is the admin-product page for my project for CSC372. It includes links to
+  to the rest of the admin pages. This project is about demonstrating
+  the functionality of an online web store. Users can assemble a shopping cart
+  of items to purchase, checkout, show transaction histories, and allow for
+  modifications of listings; all while working with a relation databse.
+-->
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Product Listing</title>
+    <link rel="stylesheet" href="styles/admin.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div id="logo">ShareWear</div>
+            <div id="menu">
+                <a href="admin-upload.html">Bulk Upload</a>
+                <a class="active" href="admin-products.html">Admin Product Listing</a>
+                <a href="index.html">Sign out</a>
+            </div>
+        </nav>
+    </header>
+
+    <h1>Admin Product Listing</h1>
+    <div id="admin_container">
+        <div id="search_filter">
+            <label for="search_input">Search by Name:</label>
+            <input type="text" id="search_input" placeholder="Search product...">
+        
+            <label for="filter_input">Filter by Category:</label>
+            <input type="text" id="filter_input" placeholder="Category...">
+        </div>
+
+        <a href="#" id="add_product" class="button">+ Add New Product</a>   
+        <table>
+            <thead>
+                <tr>
+                    <th>Product ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Image path</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>101</td>
+                    <td>Plain Black Polo Shirt</td>
+                    <td>Mens black shirt. Soft fabric.</td>
+                    <td>Shirts</td>
+                    <td><img src="image2.jpg" alt="black_polo.jpg" width="50"></td>
+                    <td>$19.99</td>
+                    <td>
+                        <a href="product-edit.html" class="button">Edit</a>
+                        <a href="#" class="button">Archive</a>
+                        <a href="#" class="button">Delete</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>102</td>
+                    <td>Black T-Shirt</td>
+                    <td>Mens T-Shirt (color black). Limited Edition</td>
+                    <td>Shirts</td>
+                    <td><img src="image2.jpg" alt="black_shirt.jpg" width="50"></td>
+                    <td>$15.99</td>
+                    <td>
+                        <a href="product-edit.html" class="button">Edit</a>
+                        <a href="#" class="button">Archive</a>
+                        <a href="#" class="button">Delete</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>103</td>
+                    <td>Plain White Button Up Shirt</td>
+                    <td>Buttoned Shirt (color white)</td>
+                    <td>Shirts</td>
+                    <td><img src="image2.jpg" alt="white_button.jpg" width="50"></td>
+                    <td>$59.99</td>
+                    <td>
+                        <a href="product-edit.html" class="button">Edit</a>
+                        <a href="#" class="button">Archive</a>
+                        <a href="#" class="button">Delete</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>104</td>
+                    <td>Denim Jeans Pants</td>
+                    <td>Denim Jeans. Levi branded.</td>
+                    <td>Pants</td>
+                    <td><img src="image2.jpg" alt="denim_jeans.jpg" width="50"></td>
+                    <td>$39.99</td>
+                    <td>
+                        <a href="product-edit.html" class="button">Edit</a>
+                        <a href="#" class="button">Archive</a>
+                        <a href="#" class="button">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -11,3 +11,5 @@ This is the full-stack project for CSC 372.
 2. Open project and in terminal, run 'npm install' to install node_modules and resolve dependencies.
 
 3. Then run 'server.js' in terminal to start project.
+
+4. Open ' http://localhost:3000 ' in browser to see project.

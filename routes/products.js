@@ -13,6 +13,6 @@ router.get('/search', productController.searchProducts);
 router.get('/category/:id', productController.getProductsByCategory);
 
 // http://localhost:3000/products/1
-router.get('/:id', productController.getProductById);
+router.get('/:id', productController.getProductById); // view one product with details
 
 module.exports = router;

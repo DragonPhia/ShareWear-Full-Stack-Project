@@ -46,3 +46,16 @@ exports.bulkUploadProducts = (products) => {
 
   return { message: 'Bulk upload completed successfully' };
 };
+
+exports.getAllProducts = () => {
+  return db.all(`
+    SELECT Products.*, Categories.name AS category_name
+    FROM Products
+    LEFT JOIN Categories ON Products.category_id = Categories.id
+  `);
+};
+
+// Delete a product by ID
+exports.deleteProduct = (id) => {
+  return db.run("DELETE FROM Products WHERE id = ?", [id]);
+};

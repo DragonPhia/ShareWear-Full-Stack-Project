@@ -18,6 +18,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Page</title>
     <link rel="stylesheet" type="text/css" href="styles/styles.css">
+    <script src="scripts/shop.js"></script>
 </head>
 <body>
     <header>
@@ -27,10 +28,10 @@
                 <a href="index.html">Home</a>
                 <a class="active" href="products.html">Product List</a>
                 <a href="cart.html">Cart</a>
-                <a href="admin-upload.html">Link to Admin (temp)</a>
+                <a href="admin-upload.html">Admin</a>
                 <div id="search">
-                    <form>
-                        <input type="text" placeholder="Search...">
+                    <form id="searchForm">
+                        <input type="text" id="searchInput" name="q" placeholder="Search...">
                         <button type="submit">Submit</button>  
                     </form>
                 </div>
@@ -48,35 +49,8 @@
         </select>
     </div>
 
-    <div id="product_listing">
-        <div class="product_card">
-            <img src="images/black_polo.png" alt="clothes"/> 
-            <h3>Plain Black Polo Shirt</h3>
-            <p>$19.99</p>
-            <a href="details.html">View Details</a>
-        </div>
-
-        <div class="product_card">
-            <img src="images/black_t_shirt.png" alt="clothes"/> 
-            <h3>Black T-Shirt</h3>
-            <p>$15.99</p>
-            <a href="details.html">View Details</a>
-        </div>
-
-        <div class="product_card">
-            <img src="images/plain_white_button_up_shirt.png" alt="clothes"/> 
-            <h3>Plain White Button Up Shirt</h3>
-            <p>$25.99</p>
-            <a href="details.html">View Details</a>
-        </div>
-
-        <div class="product_card">
-            <img src="images/jeans_pants.png" alt="clothes"/> 
-            <h3>Denim Jeans Pants</h3>
-            <p>$39.99</p>
-            <a href="details.html">View Details</a>
-        </div>
-    </div>
+    <!-- Products will be dynamically inserted -->
+    <div id="product_listing"></div>
 
     <footer>
         Copyright &copy; 2025 By Dragon Phiansin | All Rights Reserved.

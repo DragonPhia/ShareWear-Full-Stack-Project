@@ -32,6 +32,14 @@ exports.getCartItem = (cartId, productId) => {
   );
 };
 
+exports.getCartItemById = (cartId, cartProductId) => {
+  return db.get(
+    "SELECT * FROM CartProducts WHERE cart_id = ? AND id = ?",
+    cartId,
+    cartProductId
+  );
+};
+
 exports.updateCartItem = (cartId, productId, newQuantity) => {
   return db.run(
     "UPDATE CartProducts SET quantity = ? WHERE cart_id = ? AND product_id = ?",

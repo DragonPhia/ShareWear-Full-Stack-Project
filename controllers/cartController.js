@@ -47,7 +47,7 @@ exports.removeFromCart = (req, res) => {
   }
 
   try {
-    const existingCartProduct = cartModel.getCartItem(cartId, cartProductId);
+    const existingCartProduct = cartModel.getCartItemById(cartId, cartProductId);
 
     if (!existingCartProduct) {
       return res.status(404).json({ message: `Product with cart_product_id ${cartProductId} not found in cart ${cartId}` });

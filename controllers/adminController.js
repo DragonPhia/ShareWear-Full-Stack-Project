@@ -38,3 +38,23 @@ exports.bulkUploadProducts = (req, res) => {
     res.status(500).json({ error: 'Unable to upload products', details: error.message });
   }
 };
+
+exports.getAllProducts = async (req, res) => {
+  try {
+    const products = await adminModel.getAllProducts();
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ error: 'Unable to fetch products', details: error.message });
+  }
+};
+
+exports.deleteProduct = (req, res) => {
+  const id = req.params.id;
+
+  try {
+    adminModel.deleteProduct(id);
+    res.json({ message: `Product with ID ${id} deleted successfully` });
+  } catch (error) {
+    res.status(500).json({ error: 'Unable to delete product', details: error.message });
+  }
+};

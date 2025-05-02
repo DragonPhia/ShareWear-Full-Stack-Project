@@ -7,8 +7,13 @@ exports.getAllProducts = () => {
 };
 
 exports.getProductById = (id) => {
-  const product = db.get("SELECT * FROM Products WHERE id = ?", id);
-  return product;
+  return db.get(
+    `SELECT Products.*, Categories.name AS category_name
+     FROM Products
+     LEFT JOIN Categories ON Products.category_id = Categories.id
+     WHERE Products.id = ?`,
+    id
+  );
 };
 
 exports.searchProducts = (query) => {

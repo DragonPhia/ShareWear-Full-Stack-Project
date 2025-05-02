@@ -1,5 +1,6 @@
 INSERT INTO Products (name, description, image_url, price, category_id, is_featured) VALUES
-('Casual T-Shirt', 'Soft and breathable cotton t-shirt, perfect for everyday wear.', 'https://example.com/casual_tshirt.jpg', 19.99, 1, 0),
-('Slim Fit Jeans', 'Stylish slim fit jeans with stretch fabric for comfort.', 'https://example.com/slim_fit_jeans.jpg', 49.99, 2, 1),
-('Running Sneakers', 'Lightweight running shoes with breathable mesh and cushioned sole.', 'https://example.com/running_sneakers.jpg', 59.99, 3, 1),
-('Baseball Cap', 'Adjustable cotton baseball cap with embroidered logo.', 'https://example.com/baseball_cap.jpg', 14.99, 4, 0);
+('Casual T-Shirt', 'Soft and breathable cotton t-shirt, perfect for everyday wear.', 'https://tothemountainshuttle.com/wp-content/uploads/2023/08/unisex-organic-t-shirt-black-back-64de96036ebb2.jpg', 19.99, 1, 0),
+('Slim Fit Jeans', 'Stylish slim fit jeans with stretch fabric for comfort.', 'https://shopduer.com/cdn/shop/files/Performance_Denim_Slim-Galactic_8110_R_FT-ECOM-445286.jpg?v=1744050080&width=1143', 49.99, 2, 1),
+('Running Sneakers', 'Lightweight running shoes with breathable mesh and cushioned sole.', 'https://cdn.thewirecutter.com/wp-content/media/2024/11/runningshoes-2048px-09522.jpg?auto=webp&quality=75&width=1024', 59.99, 3, 1),
+('Baseball Cap', 'Adjustable cotton baseball cap with embroidered logo.', 'https://www.kbethos.com/SSP%20Applications/NetSuite%20Inc.%20-%20SCS/SuiteCommerce%20Standard/img/products/KB-LOW_NAV,01.jpg?resizeid=3&resizeh=600&resizew=600', 14.99, 4, 0),
+('Random Test Item', 'Soft and breathable cotton t-shirt, perfect for everyday wear.', 'https://images.squarespace-cdn.com/content/v1/5e10bdc20efb8f0d169f85f9/09943d85-b8c7-4d64-af31-1a27d1b76698/arrow.png', 19.99, 4, 0);

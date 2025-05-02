@@ -41,5 +41,9 @@ router.put('/products/:id', adminController.updateProduct);
 */
 router.post('/products/bulk', adminController.bulkUploadProducts);
 
+router.get('/products', adminController.getAllProducts);
+
+// http://your-domain/admin/products/1 (DELETE)
+router.delete('/products/:id', adminController.deleteProduct);
 
 module.exports = router;

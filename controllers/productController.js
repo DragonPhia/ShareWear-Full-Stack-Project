@@ -17,10 +17,10 @@ exports.searchProducts = (req, res) => {
   const query = req.query.q;
   const products = productModel.searchProducts(query);
   const simplifiedProducts = products.map(product => ({
-    id: product.id,
-    name: product.name,
-    image_url: product.image_url,
-    price: product.price,
+      id: product.id,
+      name: product.name,
+      image_url: product.image_url,
+      price: product.price,
   }));
   res.json(simplifiedProducts);
 };

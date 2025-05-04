@@ -1,15 +1,27 @@
-//cartModel.js
+// models/cartModel.js
 
 const db = require("./database");
 
 exports.getCartByUserId = (userId) => {
-  return db.all(`
+  // Try to get an existing new cart
+  let cart = db.get("SELECT id FROM Carts WHERE user_id = ? AND status = 'new'", userId);
+
+  // If no cart, create one
+  if (!cart) {
+    const result = db.run("INSERT INTO Carts (status, user_id) VALUES ('new', ?)", userId);
+    const newCartId = result.lastInsertRowid;
+    cart = { id: newCartId };
+  }
+
+  // Get cart items
+  const items = db.all(`
     SELECT cp.id AS cart_product_id, cp.quantity, p.name AS product_name, p.price, p.image_url
     FROM CartProducts cp
-    JOIN Carts c ON cp.cart_id = c.id
     JOIN Products p ON cp.product_id = p.id
-    WHERE c.user_id = ? AND c.status = 'new'
-  `, userId);
+    WHERE cp.cart_id = ?
+  `, cart.id);
+
+  return { cartId: cart.id, items };
 };
 
 exports.getOrCreateCartId = (userId) => {

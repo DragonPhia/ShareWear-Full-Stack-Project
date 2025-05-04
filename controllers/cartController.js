@@ -1,11 +1,11 @@
-//cartController.js
+// controllers/cartController.js
 const cartModel = require("../models/cartModel");
 
 exports.getCartItems = (req, res) => {
   const userId = req.params.userId;
   try {
-    const items = cartModel.getCartByUserId(userId);
-    res.json(items);
+    const result = cartModel.getCartByUserId(userId);
+    res.json(result);
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch cart items" });
   }

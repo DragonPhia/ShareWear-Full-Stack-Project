@@ -1,33 +1,42 @@
-// cart.js
+// scripts/cart.js
+let currentCartId = null;
+
 document.addEventListener('DOMContentLoaded', () => {
-    const userId = 1; // Example static user/cart ID, replace with actual logic if needed
-    fetch(`/carts/${userId}`)
-      .then(response => response.json())
-      .then(cartItems => {
-        console.log('Cart Items:', cartItems);
+  const userId = 1;
 
-        const cartList = document.getElementById('cart_list');
-        let subtotal = 0;
+  fetch(`/carts/${userId}`)
+    .then(response => response.json())
+    .then(data => {
+      const { cartId, items } = data;
+      currentCartId = cartId; // Save cartId for later checkout
 
-        cartItems.forEach(item => {
-          const itemTotal = item.price * item.quantity;
-          subtotal += itemTotal;
+      if (!cartId) {
+        console.warn('No active cart found');
+        return;
+      }
 
-          const cartItem = document.createElement('div');
-          cartItem.innerHTML = `
-            <div class="cart_item">
-              <img src="${item.image_url}" alt="${item.product_name}" />
-              <div>
-                <h4>${item.product_name}</h4>
-                <p>Quantity: ${item.quantity}</p>
-                <p>Price per item: $${item.price}</p>
-                <p>Total: $${itemTotal.toFixed(2)}</p>
-                <button onclick="removeFromCart(${userId}, ${item.cart_product_id})">Remove</button>
-              </div>
+      const cartList = document.getElementById('cart_list');
+      let subtotal = 0;
+
+      items.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        subtotal += itemTotal;
+
+        const cartItem = document.createElement('div');
+        cartItem.innerHTML = `
+          <div class="cart_item">
+            <img src="${item.image_url}" alt="${item.product_name}" />
+            <div>
+              <h4>${item.product_name}</h4>
+              <p>Quantity: ${item.quantity}</p>
+              <p>Price per item: $${item.price}</p>
+              <p>Total: $${itemTotal.toFixed(2)}</p>
+              <button onclick="removeFromCart(${cartId}, ${item.cart_product_id})">Remove</button>
             </div>
-          `;
-          cartList.appendChild(cartItem);
-        });
+          </div>
+        `;
+        cartList.appendChild(cartItem);
+      });
 
         // Calculate tax (6.75%) and delivery fee ($5.00)
         const taxRate = 6.75 / 100;
@@ -66,22 +75,22 @@ function removeFromCart(cartId, cartProductId) {
 }
 
 function checkoutCart() {
-    const userId = 1; // Replace with actual user ID if needed
+  if (!currentCartId) {
+      alert('No cart available to checkout.');
+      return;
+  }
 
-    // Step 1: Send request to backend to checkout and empty the cart
-    fetch(`/carts/${userId}/checkout`, {
-        method: 'POST'
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Checkout successful:', data);
-        alert('Checkout successful! Your cart has been emptied.');
-
-        // Step 2: After checkout, reload the page or update UI to reflect empty cart
-        window.location.reload(); // This reloads the page to show the empty cart
-    })
-    .catch(error => {
-        console.error('Error during checkout:', error);
-        alert('There was an issue during checkout.');
-    });
+  fetch(`/carts/${currentCartId}/checkout`, {
+      method: 'POST'
+  })
+  .then(response => response.json())
+  .then(data => {
+      console.log('Checkout successful:', data);
+      alert('Checkout successful! Your cart has been emptied.');
+      window.location.reload();
+  })
+  .catch(error => {
+      console.error('Error during checkout:', error);
+      alert('There was an issue during checkout.');
+  });
 }

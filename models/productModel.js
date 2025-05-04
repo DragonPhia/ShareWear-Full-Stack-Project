@@ -21,7 +21,7 @@ exports.searchProducts = (query) => {
 };
 
 exports.getProductsByCategory = (categoryId) => {
-  return db.all("SELECT id, name, image_url, price, category_id FROM Products WHERE category_id = ?", categoryId);
+  return db.all("SELECT * FROM Products WHERE category_id = ?", [categoryId]);
 };
 
 exports.addProduct = (name, description, imageUrl, price, categoryId, isFeatured) => {
@@ -36,4 +36,14 @@ exports.updateProduct = (id, name, description, imageUrl, price, categoryId, isF
     "UPDATE Products SET name = ?, description = ?, image_url = ?, price = ?, category_id = ?, is_featured = ? WHERE id = ?",
     name, description, imageUrl, price, categoryId, isFeatured, id
   );
+};
+
+exports.getProducts = async (req, res) => {
+  try {
+    const categoryId = req.query.category_id;
+    const products = await productModel.getProducts(categoryId);
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch products', details: error.message });
+  }
 };

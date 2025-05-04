@@ -36,10 +36,12 @@
     <div id="admin_container">
         <div id="search_filter">
             <label for="search_input">Search by Name:</label>
-            <input type="text" id="search_input" placeholder="Search product...">
+            <input type="text" id="search_input" name="q" placeholder="Search product...">
         
             <label for="filter_input">Filter by Category:</label>
-            <input type="text" id="filter_input" placeholder="Category...">
+            <select id="filter_input">
+                <option value="">All Categories</option>
+            </select>
         </div>
 
         <a href="admin-create.html" id="add_product" class="button">Add New Product</a>  

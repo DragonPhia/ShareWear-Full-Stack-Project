@@ -1,6 +1,38 @@
-// public/shop.js
+// public/scripts/shop.js
 
 document.addEventListener('DOMContentLoaded', () => {
+
+
+    // Fetch and populate the category dropdown
+    fetch('/categories')
+        .then(res => res.json())
+        .then(categories => {
+            const dropdown = document.getElementById('dropdown');
+            dropdown.innerHTML = '<option value="">All</option>'; // Add "All" option
+
+            categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.id; // use category ID for filtering
+                option.textContent = category.name;
+                dropdown.appendChild(option);
+            });
+        });
+
+        document.getElementById('dropdown').addEventListener('change', function () {
+            const categoryId = this.value;
+        
+            if (categoryId === '') {
+                fetch('/products')
+                    .then(res => res.json())
+                    .then(displayProducts)
+                    .catch(err => console.error('Error fetching all products:', err));
+            } else {
+                fetch(`/products/category/${categoryId}`)
+                    .then(res => res.json())
+                    .then(displayProducts)
+                    .catch(err => console.error('Error fetching category products:', err));
+            }
+        });
 
     // Handle form submission for product search
     document.getElementById('searchForm').addEventListener('submit', function(event) {

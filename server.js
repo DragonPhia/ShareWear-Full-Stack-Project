@@ -1,3 +1,4 @@
+// server.js
 "use strict";
 
 const express = require("express");
@@ -60,6 +61,11 @@ const adminRoutes = require("./routes/admin");
 app.use("/products", productsRoutes);  // All product-related routes
 app.use("/carts", cartsRoutes);        // All cart-related routes
 app.use("/admin", adminRoutes);        // Admin routes for product management
+
+const categoryRoutes = require('./routes/categories'); // Import the categories route
+
+// Use the routes
+app.use('/categories', categoryRoutes);  // Use the categories route
 
 // Default route
 app.get("/", (req, res) => {

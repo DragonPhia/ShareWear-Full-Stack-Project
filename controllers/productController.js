@@ -54,3 +54,13 @@ exports.getProductById = (req, res) => {
     res.status(500).json({ error: 'Failed to fetch product details', details: error.message });
   }
 };
+
+exports.getProducts = async (req, res) => {
+  try {
+    const categoryId = req.query.category_id;
+    const products = await productModel.getProducts(categoryId);
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch products', details: error.message });
+  }
+};

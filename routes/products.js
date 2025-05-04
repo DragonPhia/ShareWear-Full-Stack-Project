@@ -15,4 +15,6 @@ router.get('/category/:id', productController.getProductsByCategory);
 // http://localhost:3000/products/1
 router.get('/:id', productController.getProductById); // view one product with details
 
+router.get('/', productController.getProducts);
+
 module.exports = router;

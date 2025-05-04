@@ -2,6 +2,18 @@
 document.addEventListener("DOMContentLoaded", () => {
     fetchProducts();
 
+    let allProducts = [];
+
+    const searchInput = document.getElementById("search_input");
+    const categoryInput = document.getElementById("filter_input");
+
+    if (searchInput && categoryInput) {
+        searchInput.addEventListener("input", () => filterAndRenderProducts());
+        categoryInput.addEventListener("input", () => filterAndRenderProducts());
+    }
+
+
+
     const addProductButton = document.getElementById("add_product");
     if (addProductButton) {
         addProductButton.addEventListener("click", (e) => {
@@ -123,7 +135,9 @@ function fetchProducts() {
             return response.json();
         })
         .then(products => {
-            populateTable(products);
+            allProducts = products;
+            populateCategoryDropdown(products); // <--- NEW
+            filterAndRenderProducts();
         })
         .catch(error => {
             console.error("Error loading products:", error);
@@ -225,5 +239,35 @@ function deleteProduct(id) {
     .catch(error => {
         console.error("Delete failed:", error);
         alert("An error occurred while deleting the product.");
+    });
+}
+
+function filterAndRenderProducts() {
+    const query = document.getElementById("search_input").value.toLowerCase();
+    const selectedCategory = document.getElementById("filter_input").value.toLowerCase();
+
+    const filtered = allProducts.filter(product => {
+        const nameMatch = product.name.toLowerCase().includes(query);
+        const descMatch = product.description.toLowerCase().includes(query);
+        const categoryName = (product.category_name || product.category_id || "").toString().toLowerCase();
+        const categoryMatch = !selectedCategory || categoryName === selectedCategory;
+        return (nameMatch || descMatch) && categoryMatch;
+    });
+
+    populateTable(filtered);
+}
+
+function populateCategoryDropdown(products) {
+    const categorySelect = document.getElementById("filter_input");
+    if (!categorySelect) return;
+
+    const categories = [...new Set(products.map(p => p.category_name || p.category_id))];
+    
+    categorySelect.innerHTML = `<option value="">All Categories</option>`;
+    categories.forEach(category => {
+        const option = document.createElement("option");
+        option.value = category;
+        option.textContent = category;
+        categorySelect.appendChild(option);
     });
 }

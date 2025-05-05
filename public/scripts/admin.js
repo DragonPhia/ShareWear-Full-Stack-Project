@@ -2,6 +2,10 @@
 document.addEventListener("DOMContentLoaded", () => {
     fetchProducts();
 
+    if (document.getElementById("create_product_form")) {
+        populateCategoryDropdownFromAPI();
+    }
+
     let allProducts = [];
 
     const searchInput = document.getElementById("search_input");
@@ -79,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 document.getElementById("name").value = product.name;
                 document.getElementById("description").value = product.description;
-                document.getElementById("category_id").value = product.category_id;
+                populateCategoryDropdownFromAPI(product.category_id);
                 document.getElementById("image_url").value = product.image_url;
                 document.getElementById("price").value = product.price;
                 
@@ -270,4 +274,29 @@ function populateCategoryDropdown(products) {
         option.textContent = category;
         categorySelect.appendChild(option);
     });
+}
+
+function populateCategoryDropdownFromAPI(selectedCategoryId = null) {
+    fetch('/categories')
+        .then(response => {
+            if (!response.ok) throw new Error("Failed to fetch categories.");
+            return response.json();
+        })
+        .then(categories => {
+            const categorySelect = document.getElementById("category_id");
+            categorySelect.innerHTML = "";
+
+            categories.forEach(category => {
+                const option = document.createElement("option");
+                option.value = category.id;
+                option.textContent = category.name;
+                if (selectedCategoryId && category.id === selectedCategoryId) {
+                    option.selected = true;
+                }
+                categorySelect.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error("Error populating category dropdown:", error);
+        });
 }

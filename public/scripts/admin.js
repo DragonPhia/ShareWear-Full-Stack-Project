@@ -8,6 +8,71 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let allProducts = [];
 
+
+
+    const fileForm = document.getElementById("file_upload");
+    if (fileForm) {
+        fileForm.addEventListener("submit", async function (e) {
+            e.preventDefault();
+        
+            const fileInput = document.getElementById("file");
+            const file = fileInput.files[0];
+        
+            if (!file) {
+                alert("Please select a file.");
+                return;
+            }
+        
+            const fileName = file.name.toLowerCase();
+            const fileExtension = fileName.split('.').pop();
+        
+            let products;
+        
+            try {
+                const text = await file.text();
+        
+                if (fileExtension === "json") {
+                    products = JSON.parse(text);
+                } else if (fileExtension === "csv") {
+                    products = parseCSV(text);
+                } else {
+                    alert("Unsupported file type. Please upload a .json or .csv file.");
+                    return;
+                }
+        
+                if (!Array.isArray(products)) {
+                    alert("Uploaded file should contain an array of products.");
+                    return;
+                }
+        
+                // Send each product individually to backend
+                const responses = await Promise.all(products.map(product =>
+                    fetch('/admin/products', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(product)
+                    })
+                ));
+        
+                const failed = responses.filter(res => !res.ok);
+        
+                if (failed.length > 0) {
+                    alert(`Upload completed with ${failed.length} failed entries.`);
+                } else {
+                    alert("All products uploaded successfully.");
+                }
+        
+                window.location.href = "admin-products.html";
+        
+            } catch (err) {
+                console.error("Error uploading file:", err);
+                alert("Failed to upload file.");
+            }
+        });
+    }
+
     const searchInput = document.getElementById("search_input");
     const categoryInput = document.getElementById("filter_input");
 
@@ -299,4 +364,20 @@ function populateCategoryDropdownFromAPI(selectedCategoryId = null) {
         .catch(error => {
             console.error("Error populating category dropdown:", error);
         });
+}
+
+function parseCSV(text) {
+    const lines = text.trim().split('\n');
+    const headers = lines.shift().split(',').map(h => h.trim());
+
+    return lines.map(line => {
+        const values = line.split(',').map(v => v.trim());
+        const obj = {};
+        headers.forEach((header, i) => {
+            let value = values[i];
+            if (header === "price") value = parseFloat(value);
+            obj[header] = value;
+        });
+        return obj;
+    });
 }

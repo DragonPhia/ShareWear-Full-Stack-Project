@@ -94,7 +94,6 @@ nav a {
     display: block;
     margin: 0 auto;    
     margin-bottom: 10px;
-    
 }
 
 .product_card {
@@ -137,48 +136,68 @@ footer {
     width: 100%;
 }
 
+/* Cart Page Specific Styles */
 #cart_container {
     display: flex;
-    justify-content: center;
-    max-width: 70%;
-    margin: auto;
-    gap: 20px; 
+    justify-content: space-between;
+    gap: 20px;
+    max-width: 90%;
+    margin: 20px auto;
 }
 
 #cart_list {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 20px;
     background-color: rgb(250, 246, 246);
-    padding: 15px;
+    padding: 20px;
     width: 65%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #checkout-summary {
     display: flex;
     flex-direction: column;
     background-color: rgb(250, 246, 246);
-    padding: 20px; 
+    padding: 20px;
     width: 30%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .cart_item {
     display: flex;
-    align-items: center; /* Align items in a row */
-    border-bottom: 1px solid gray;
-    padding: 10px;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding: 15px;
+    font-size: 16px;
+    color: #333;
+    gap: 20px; /* Adds space between image and product details */
 }
 
 .cart_item img {
-    width: 200px;
-    height: auto;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
 }
 
 .item_details {
     display: flex;
     flex-direction: column;
-    margin-left: 20px; 
-    flex-grow: 1; 
+    margin-left: 20px;
+    flex-grow: 1;
+}
+
+.item_details h4 {
+    font-size: 18px;
+    color: #1c1d69;
+    margin-bottom: 5px;
+}
+
+.item_details p {
+    margin: 5px 0;
 }
 
 .quantity_input {
@@ -188,9 +207,44 @@ footer {
 .remove_btn {
     display: flex;
     align-items: end;
-    margin-top: 40px;
+    margin-top: 10px;
 }
 
 .checkout button {
+    background-color: #1c1d69;
+    color: white;
+    border: none;
+    padding: 15px;
     width: 100%;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.checkout button:hover {
+    background-color: #4a60a2;
+}
+
+#checkout-summary h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #1c1d69;
+}
+
+#checkout-summary h4 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#checkout-summary div {
+    margin-bottom: 15px;
+}
+
+footer {
+    background-color: #1c1d69;
+    color: white;
+    padding: 10px;
+    text-align: center;
 }

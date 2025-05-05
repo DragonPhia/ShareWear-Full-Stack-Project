@@ -39,5 +39,5 @@ CREATE TABLE IF NOT EXISTS CartProducts (
     product_id INTEGER NOT NULL,
     quantity INTEGER NOT NULL,
     FOREIGN KEY (cart_id) REFERENCES Carts(id),
-    FOREIGN KEY (product_id) REFERENCES Products(id)
+    FOREIGN KEY (product_id) REFERENCES Products(id) ON DELETE CASCADE
 );

@@ -23,43 +23,90 @@ document.addEventListener('DOMContentLoaded', () => {
         subtotal += itemTotal;
 
         const cartItem = document.createElement('div');
-        cartItem.innerHTML = `
-          <div class="cart_item">
-            <img src="${item.image_url}" alt="${item.product_name}" />
-            <div>
-              <h4>${item.product_name}</h4>
-              <p>Quantity: ${item.quantity}</p>
-              <p>Price per item: $${item.price}</p>
-              <p>Total: $${itemTotal.toFixed(2)}</p>
-              <button onclick="removeFromCart(${cartId}, ${item.cart_product_id})">Remove</button>
-            </div>
-          </div>
-        `;
+        cartItem.classList.add('cart_item');
+
+        const image = document.createElement('img');
+        image.src = item.image_url;
+        image.alt = item.product_name;
+
+        const itemDetails = document.createElement('div');
+
+        const itemName = document.createElement('h4');
+        itemName.textContent = item.product_name;
+
+        const itemQuantity = document.createElement('p');
+        itemQuantity.textContent = `Quantity: ${item.quantity}`;
+
+        const pricePerItem = document.createElement('p');
+        pricePerItem.textContent = `Price per item: $${item.price}`;
+
+        const total = document.createElement('p');
+        total.textContent = `Total: $${itemTotal.toFixed(2)}`;
+
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove';
+        removeButton.onclick = () => removeFromCart(cartId, item.cart_product_id);
+
+        itemDetails.appendChild(itemName);
+        itemDetails.appendChild(itemQuantity);
+        itemDetails.appendChild(pricePerItem);
+        itemDetails.appendChild(total);
+        itemDetails.appendChild(removeButton);
+
+        cartItem.appendChild(image);
+        cartItem.appendChild(itemDetails);
+
         cartList.appendChild(cartItem);
       });
 
-        // Calculate tax (6.75%) and delivery fee ($5.00)
-        const taxRate = 6.75 / 100;
-        const deliveryFee = 5.00;
-        const taxAmount = subtotal * taxRate;
-        const totalCost = subtotal + taxAmount + deliveryFee;
+      // Calculate tax (6.75%) and delivery fee ($5.00)
+      const taxRate = 6.75 / 100;
+      const deliveryFee = 5.00;
+      const taxAmount = subtotal * taxRate;
+      const totalCost = subtotal + taxAmount + deliveryFee;
 
-        // Displaying the checkout summary
-        const checkoutSummary = document.getElementById('checkout-summary');
-        checkoutSummary.innerHTML = `
-            <h2>Checkout</h2>
-            <h4>Subtotal: $${subtotal.toFixed(2)}</h4>
-            <h4>Tax (6.75%): $${taxAmount.toFixed(2)}</h4>
-            <h4>Delivery Fee: $${deliveryFee.toFixed(2)}</h4>
-            <h4>Service Fee: $0.00</h4>  <!-- You can modify this if you have a service fee -->
-            <h4>Total: $${totalCost.toFixed(2)}</h4>
-            <div id="checkout">
-              <button onclick="checkoutCart()">Checkout</button>
-            </div>
-        `;
-      })
-      .catch(error => console.error('Error loading cart:', error));
-  });
+      // Displaying the checkout summary
+      const checkoutSummary = document.getElementById('checkout-summary');
+      const summaryContainer = document.createElement('div');
+
+      const checkoutTitle = document.createElement('h2');
+      checkoutTitle.textContent = 'Checkout';
+
+      const subtotalText = document.createElement('h4');
+      subtotalText.textContent = `Subtotal: $${subtotal.toFixed(2)}`;
+
+      const taxText = document.createElement('h4');
+      taxText.textContent = `Tax (6.75%): $${taxAmount.toFixed(2)}`;
+
+      const deliveryFeeText = document.createElement('h4');
+      deliveryFeeText.textContent = `Delivery Fee: $${deliveryFee.toFixed(2)}`;
+
+      const serviceFeeText = document.createElement('h4');
+      serviceFeeText.textContent = `Service Fee: $0.00`;  // Modify as needed
+
+      const totalText = document.createElement('h4');
+      totalText.textContent = `Total: $${totalCost.toFixed(2)}`;
+
+      const checkoutButtonContainer = document.createElement('div');
+      checkoutButtonContainer.id = 'checkout';
+      const checkoutButton = document.createElement('button');
+      checkoutButton.textContent = 'Checkout';
+      checkoutButton.onclick = checkoutCart;
+
+      checkoutButtonContainer.appendChild(checkoutButton);
+
+      summaryContainer.appendChild(checkoutTitle);
+      summaryContainer.appendChild(subtotalText);
+      summaryContainer.appendChild(taxText);
+      summaryContainer.appendChild(deliveryFeeText);
+      summaryContainer.appendChild(serviceFeeText);
+      summaryContainer.appendChild(totalText);
+      summaryContainer.appendChild(checkoutButtonContainer);
+
+      checkoutSummary.appendChild(summaryContainer);
+    })
+    .catch(error => console.error('Error loading cart:', error));
+});
 
 function removeFromCart(cartId, cartProductId) {
     fetch(`/carts/${cartId}/products/${cartProductId}`, {

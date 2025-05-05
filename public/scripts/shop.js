@@ -1,14 +1,14 @@
 // public/scripts/shop.js
-
 document.addEventListener('DOMContentLoaded', () => {
-
-
     // Fetch and populate the category dropdown
     fetch('/categories')
         .then(res => res.json())
         .then(categories => {
             const dropdown = document.getElementById('dropdown');
-            dropdown.innerHTML = '<option value="">All</option>'; // Add "All" option
+            const defaultOption = document.createElement('option');
+            defaultOption.value = '';
+            defaultOption.textContent = 'All';
+            dropdown.appendChild(defaultOption); // Add "All" option
 
             categories.forEach(category => {
                 const option = document.createElement('option');
@@ -18,21 +18,21 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        document.getElementById('dropdown').addEventListener('change', function () {
-            const categoryId = this.value;
-        
-            if (categoryId === '') {
-                fetch('/products')
-                    .then(res => res.json())
-                    .then(displayProducts)
-                    .catch(err => console.error('Error fetching all products:', err));
-            } else {
-                fetch(`/products/category/${categoryId}`)
-                    .then(res => res.json())
-                    .then(displayProducts)
-                    .catch(err => console.error('Error fetching category products:', err));
-            }
-        });
+    document.getElementById('dropdown').addEventListener('change', function () {
+        const categoryId = this.value;
+
+        if (categoryId === '') {
+            fetch('/products')
+                .then(res => res.json())
+                .then(displayProducts)
+                .catch(err => console.error('Error fetching all products:', err));
+        } else {
+            fetch(`/products/category/${categoryId}`)
+                .then(res => res.json())
+                .then(displayProducts)
+                .catch(err => console.error('Error fetching category products:', err));
+        }
+    });
 
     // Handle form submission for product search
     document.getElementById('searchForm').addEventListener('submit', function(event) {
@@ -58,38 +58,18 @@ document.addEventListener('DOMContentLoaded', () => {
     function displayProducts(products) {
         const productListing = document.getElementById('product_listing');
         productListing.innerHTML = '';  // Clear existing product listings
-    
+
         if (products.length === 0) {
-            productListing.innerHTML = '<p>No products found.</p>';
+            const noProductsMessage = document.createElement('p');
+            noProductsMessage.textContent = 'No products found.';
+            productListing.appendChild(noProductsMessage);
         } else {
             products.forEach(product => {
-                const productElement = document.createElement('div');
-                productElement.classList.add('product_card');  // Apply the class for styling
-
-                productElement.innerHTML = `
-                    <img class="product-image" src="${product.image_url}" alt="${product.name}" />
-                    <h3>${product.name}</h3>
-                    <p>$${product.price}</p>
-                    <a href="details.html?id=${product.id}" class="view-details-link">View Details</a>
-                `;
-                
-                // Append the product to the listing
-                productListing.appendChild(productElement);
-            });
-        }
-    }
-
-    // Fetch and display all products on initial load
-    fetch('/products')
-        .then(response => response.json())
-        .then(products => {
-            const productListing = document.getElementById('product_listing'); // make sure this id matches!!
-
-            products.forEach(product => {
                 const productCard = document.createElement('div');
-                productCard.className = 'product_card'; // Use the same class for consistency
+                productCard.classList.add('product_card');  // Apply the class for styling
 
                 const img = document.createElement('img');
+                img.classList.add('product-image');
                 img.src = product.image_url;
                 img.alt = product.name;
 
@@ -113,6 +93,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Add card to the product listing
                 productListing.appendChild(productCard);
             });
+        }
+    }
+
+    // Fetch and display all products on initial load
+    fetch('/products')
+        .then(response => response.json())
+        .then(products => {
+            displayProducts(products);
         })
         .catch(error => console.error('Error fetching products:', error));
 });

@@ -13,23 +13,58 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .then(product => {
       console.log('Fetched single product:', product);
+      
       const productDetails = document.getElementById('product-details');
-      productDetails.innerHTML = `
-        <div id="details_card">
-          <img src="${product.image_url}" alt="${product.name}" />
-          <div id="details">
-            <h2>${product.name}</h2>
-            <p>${product.description}</p>
-            <p><strong>Category:</strong> ${product.category_name || 'Uncategorized'}</p>
-            <p>Price: <strong>$${product.price}</strong></p>
-            <button onclick="addToCart(${product.id}, ${product.price})">Add to Cart</button>
-          </div>
-        </div>
-      `;
+      productDetails.innerHTML = '';  // Clear previous content
+
+      const detailsCard = document.createElement('div');
+      detailsCard.id = 'details_card';
+
+      const productImage = document.createElement('img');
+      productImage.src = product.image_url;
+      productImage.alt = product.name;
+
+      const detailsDiv = document.createElement('div');
+      detailsDiv.id = 'details';
+
+      const productName = document.createElement('h2');
+      productName.textContent = product.name;
+
+      const productDescription = document.createElement('p');
+      productDescription.textContent = product.description;
+
+      const productCategory = document.createElement('p');
+      productCategory.innerHTML = `<strong>Category:</strong> ${product.category_name || 'Uncategorized'}`;
+
+      const productPrice = document.createElement('p');
+      productPrice.innerHTML = `Price: <strong>$${product.price}</strong>`;
+
+      detailsDiv.appendChild(productName);
+      detailsDiv.appendChild(productDescription);
+      detailsDiv.appendChild(productCategory);
+      detailsDiv.appendChild(productPrice);
+
+      // Add "Is Featured" info if the product is featured
+      if (product.is_featured) {
+        const isFeatured = document.createElement('p');
+        isFeatured.innerHTML = `<strong>Featured:</strong> Yes`;
+        detailsDiv.appendChild(isFeatured);
+      }
+
+      const addToCartButton = document.createElement('button');
+      addToCartButton.textContent = 'Add to Cart';
+      addToCartButton.onclick = () => addToCart(product.id, product.price);
+      detailsDiv.appendChild(addToCartButton);
+
+      detailsCard.appendChild(productImage);
+      detailsCard.appendChild(detailsDiv);
+
+      productDetails.appendChild(detailsCard);
     })
     .catch(error => {
       console.error('Error fetching product details:', error);
-      document.getElementById('product-details').innerHTML = '<p>Product not found.</p>';
+      const productDetails = document.getElementById('product-details');
+      productDetails.innerHTML = '<p>Product not found.</p>';
     });
 });
 

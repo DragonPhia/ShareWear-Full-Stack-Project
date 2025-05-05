@@ -53,9 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
             <h4>Delivery Fee: $${deliveryFee.toFixed(2)}</h4>
             <h4>Service Fee: $0.00</h4>  <!-- You can modify this if you have a service fee -->
             <h4>Total: $${totalCost.toFixed(2)}</h4>
-            <form action="#">
-                <button type="submit">Proceed to Checkout</button>
-            </form>
+            <div id="checkout">
+              <button onclick="checkoutCart()">Checkout</button>
+            </div>
         `;
       })
       .catch(error => console.error('Error loading cart:', error));

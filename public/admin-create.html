@@ -1,51 +1,74 @@
 <!DOCTYPE html>
+
+<!--
+  Name: Dragon Phiansin
+  Date: 02.23.2025
+  CSC 372-01
+
+  This is the create page for my project for CSC372. It is a part of the admin's
+  abilities as to create a new product for the shopping page.
+-->
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Create Product</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles/admin.css">
     <script src="scripts/admin.js"></script>
 </head>
 <body>
-    <h1>Create New Product</h1>
-    <form id="create_product_form">
-        <label>
-            Name:
-            <input type="text" id="name" required>
-        </label><br><br>
+    <header>
+        <nav>
+            <div id="logo">ShareWear</div>
+            <div id="menu">
+                <a href="admin-upload.html">Bulk Upload</a>
+                <a class="active" href="admin-products.html">Admin Product Listing</a>
+                <a href="index.html">Sign out</a>
+            </div>
+        </nav>
+    </header>
 
-        <label>
-            Description:
-            <textarea id="description" required></textarea>
-        </label><br><br>
+    <div id="admin_edit_container">
+        <h1>Create New Product</h1>
+        <form id="create_product_form">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" class="input-field" required>
+            </div>
 
-        <label>
-            Category ID:
-            <input type="number" id="category_id" required>
-        </label><br><br>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" class="input-field" required></textarea>
+            </div>
 
-        <label>
-            Image URL:
-            <input type="text" id="image_url" required>
-        </label><br><br>
+            <div class="form-group">
+                <label for="category_id">Category ID:</label>
+                <input type="number" id="category_id" class="input-field" required>
+            </div>
 
-        <label>
-            Price:
-            <input type="number" step="0.01" id="price" required>
-        </label><br><br>
+            <div class="form-group">
+                <label for="image_url">Image URL:</label>
+                <input type="text" id="image_url" class="input-field" required>
+            </div>
 
-        <label>
-            Is Featured:
-            <select id="is_featured" required>
-                <option value="0">No</option>
-                <option value="1">Yes</option>
-            </select>
-        </label><br><br>
+            <div class="form-group">
+                <label for="price">Price:</label>
+                <input type="number" step="0.01" id="price" class="input-field" required>
+            </div>
 
-        <button type="submit">Create Product</button>
-    </form>
+            <div class="form-group">
+                <label for="is_featured">Is Featured:</label>
+                <select id="is_featured" class="input-field" required>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+
+            <button type="submit" class="button">Create Product</button>
+        </form>
+    </div>
 
     <br>
-    <a href="admin-products.html">Back to Products</a>
+    <a href="admin-products.html" class="button">Back to Products</a>
 </body>
 </html>

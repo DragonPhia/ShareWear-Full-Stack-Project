@@ -143,3 +143,62 @@ th {
     background: #f8f8f8; 
     white-space: pre-wrap; 
 }
+
+.input-field {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #1c1d69;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.button:hover {
+    background-color: #2e2f8d;
+}
+
+#admin_edit_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin: 20px auto;
+    width: 80%;
+}
+
+h1 {
+    color: #1c1d69;
+    font-size: 2.5rem;
+}
+
+a.button {
+    margin-top: 20px;
+    display: inline-block;
+    background-color: #4d4d4e;
+    padding: 10px 20px;
+    text-decoration: none;
+    text-align: center;
+    color: white;
+    border-radius: 4px;
+}
+
+a.button:hover {
+    background-color: #3e3e3f;
+}

@@ -193,15 +193,15 @@ function populateTable(products) {
         editLink.className = "button";
         actionsTd.appendChild(editLink);
 
-        const archiveLink = document.createElement("a");
-        archiveLink.href = "#";
-        archiveLink.textContent = "Archive";
-        archiveLink.className = "button";
-        archiveLink.addEventListener("click", (e) => {
-            e.preventDefault();
-            archiveProduct(product.id);
-        });
-        actionsTd.appendChild(archiveLink);
+        // const archiveLink = document.createElement("a");
+        // archiveLink.href = "#";
+        // archiveLink.textContent = "Archive";
+        // archiveLink.className = "button";
+        // archiveLink.addEventListener("click", (e) => {
+        //     e.preventDefault();
+        //     archiveProduct(product.id);
+        // });
+        // actionsTd.appendChild(archiveLink);
 
         const deleteLink = document.createElement("a");
         deleteLink.href = "#";
@@ -218,9 +218,9 @@ function populateTable(products) {
     });
 }
 
-function archiveProduct(id) {
-    alert(`Archive feature for product ${id} is not implemented yet.`);
-}
+// function archiveProduct(id) {
+//     alert(`Archive feature for product ${id} is not implemented yet.`);
+// }
 
 function deleteProduct(id) {
     if (!confirm("Are you sure you want to delete this product?")) return;

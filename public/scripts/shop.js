@@ -1,5 +1,9 @@
 // public/scripts/shop.js
 document.addEventListener('DOMContentLoaded', () => {
+    const API_KEY = 'cur_live_bK2LdX2J9yt8sQKA2VArrZT9EdCSaGvLwNhEwWWM';
+    let exchangeRates = {};
+    let selectedCurrency = 'USD';
+
     // Fetch and populate the category dropdown
     fetch('/categories')
         .then(res => res.json())
@@ -8,11 +12,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const defaultOption = document.createElement('option');
             defaultOption.value = '';
             defaultOption.textContent = 'All';
-            dropdown.appendChild(defaultOption); // Add "All" option
+            dropdown.appendChild(defaultOption);
 
             categories.forEach(category => {
                 const option = document.createElement('option');
-                option.value = category.id; // use category ID for filtering
+                option.value = category.id;
                 option.textContent = category.name;
                 dropdown.appendChild(option);
             });
@@ -34,30 +38,39 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Handle form submission for product search
-    document.getElementById('searchForm').addEventListener('submit', function(event) {
-        event.preventDefault();  // Prevent the default form submission behavior
-
-        const query = document.getElementById('searchInput').value;  // Get the search input value
-        searchProducts(query);  // Call the function to search products
+    // Currency dropdown
+    document.getElementById('currency').addEventListener('change', function () {
+        selectedCurrency = this.value;
+        fetch('/products')
+            .then(response => response.json())
+            .then(displayProducts)
+            .catch(error => console.error('Error fetching products:', error));
     });
 
-    // Function to fetch products from the backend based on the search query
+    // Get latest exchange rates
+    fetch(`https://api.currencyapi.com/v3/latest?apikey=${API_KEY}&base_currency=USD`)
+        .then(res => res.json())
+        .then(data => {
+            exchangeRates = data.data;
+        })
+        .catch(error => console.error('Error fetching exchange rates:', error));
+
+    document.getElementById('searchForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const query = document.getElementById('searchInput').value;
+        searchProducts(query);
+    });
+
     function searchProducts(query) {
         fetch(`/products/search?q=${query}`)
             .then(response => response.json())
-            .then(products => {
-                displayProducts(products);  // Display the search results
-            })
-            .catch(error => {
-                console.error('Error searching products:', error);
-            });
+            .then(products => displayProducts(products))
+            .catch(error => console.error('Error searching products:', error));
     }
 
-    // Function to display the products
     function displayProducts(products) {
         const productListing = document.getElementById('product_listing');
-        productListing.innerHTML = '';  // Clear existing product listings
+        productListing.innerHTML = '';
 
         if (products.length === 0) {
             const noProductsMessage = document.createElement('p');
@@ -66,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             products.forEach(product => {
                 const productCard = document.createElement('div');
-                productCard.classList.add('product_card');  // Apply the class for styling
+                productCard.classList.add('product_card');
 
                 const img = document.createElement('img');
                 img.classList.add('product-image');
@@ -77,30 +90,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 title.textContent = product.name;
 
                 const price = document.createElement('p');
-                price.textContent = `$${product.price.toFixed(2)}`;
+                let convertedPrice = product.price;
+
+                if (selectedCurrency !== 'USD' && exchangeRates[selectedCurrency]) {
+                    convertedPrice *= exchangeRates[selectedCurrency].value;
+                }
+
+                price.textContent = `${selectedCurrency} ${convertedPrice.toFixed(2)}`;
 
                 const link = document.createElement('a');
                 link.href = `details.html?id=${product.id}`;
                 link.textContent = 'View Details';
-                link.classList.add('view-details-link');  // Added for styling consistency
+                link.classList.add('view-details-link');
 
-                // Add everything inside the card
                 productCard.appendChild(img);
                 productCard.appendChild(title);
                 productCard.appendChild(price);
                 productCard.appendChild(link);
-
-                // Add card to the product listing
                 productListing.appendChild(productCard);
             });
         }
     }
 
-    // Fetch and display all products on initial load
     fetch('/products')
         .then(response => response.json())
-        .then(products => {
-            displayProducts(products);
-        })
+        .then(products => displayProducts(products))
         .catch(error => console.error('Error fetching products:', error));
 });

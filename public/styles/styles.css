@@ -90,7 +90,7 @@ nav a {
     align-items: center;
 }
 
-#dropdown {
+#dropdown, #currency, #currency-selector {
     display: block;
     margin: 0 auto;    
     margin-bottom: 10px;

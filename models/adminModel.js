@@ -1,5 +1,5 @@
 // adminModel.js
-const db = require("./database");  // Make sure you're importing the database correctly
+const db = require("./database");
 
 // Add a single product
 exports.addProduct = (product) => {

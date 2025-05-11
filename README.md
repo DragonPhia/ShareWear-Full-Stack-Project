@@ -1,12 +1,12 @@
-# CSC372-Full-Stack-Project
+# ShareWear-Full-Stack-Project
 
 ## Description
-This is the full-stack project for CSC 372.
+Full stack project for Web Development.
 
 ## Setup
 1. Clone this repository:
 
-   git clone https://github.com/DragonPhia/CSC372-Full-Stack-Project.git
+   git clone https://github.com/DragonPhia/ShareWear-Full-Stack-Project.git
 
 2. Open project and in terminal, run 'npm install' to install node_modules and resolve dependencies.
 
